@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniversalX | The Ultimate Office Intelligence Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #3b82f6; --bg: #030712; }
+        body { background-color: var(--bg); color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        
+        /* Animated Background */
+        .orb { position: absolute; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.4; animation: float 20s infinite alternate; }
+        @keyframes float { from { transform: translate(0,0); } to { transform: translate(100px, 100px); } }
+
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px) scale(1.02); border-color: var(--primary); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15); }
+        
+        .gradient-text { background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-glow { box-shadow: 0 0 100px rgba(59, 130, 246, 0.2); }
+    </style>
+</head>
+<body>
+
+    <div class="orb w-96 h-96 bg-blue-600 top-[-10%] left-[-10%]"></div>
+    <div class="orb w-80 h-80 bg-purple-600 bottom-[10%] right-[-5%]"></div>
+
+    <nav class="sticky top-0 z-50 glass border-b border-white/5 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 p-2 rounded-2xl hero-glow">
+                    <i data-lucide="layers" class="text-white w-6 h-6"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tighter uppercase italic">Universal<span class="text-blue-500">X</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide">
+                <a href="/" class="text-blue-500">Home</a>
+                <a href="#" class="hover:text-blue-400 transition">My Files</a>
+                <a href="#" class="hover:text-blue-400 transition">Enterprise</a>
+                <button class="bg-white text-black px-6 py-2.5 rounded-full hover:bg-blue-500 hover:text-white transition-all font-bold">Try Pro</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="max-w-6xl mx-auto text-center pt-24 pb-16 px-6">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-8 uppercase tracking-widest">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            Next-Gen AI Engine Active
+        </div>
+        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.1] gradient-text">
+            Documents <br>
+        </h1>
+        <p class="text-slate-400 text-xl max-w-2xl mx-auto mb-16 font-light leading-relaxed">
+            Convert, compress, and edit your Office files with high-fidelity AI processing. Trusted by over 10k+ professionals worldwide.
+        </p>
+
+        <div id="dropZone" class="glass hero-glow rounded-[4rem] p-20 border-2 border-dashed border-white/10 hover:border-blue-500/50 transition-all cursor-pointer group max-w-4xl mx-auto relative overflow-hidden">
+            <div class="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <input type="file" id="fileInput" class="hidden">
+            <div class="relative z-10">
+                <div class="w-24 h-24 bg-white/5 rounded-3xl flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500">
+                    <i data-lucide="upload-cloud" class="w-12 h-12 text-blue-500"></i>
+                </div>
+                <h3 class="text-3xl font-extrabold mb-3" id="toolTitle">Upload Files</h3>
+                <p class="text-slate-500 text-lg" id="toolDesc">Ready to convert PDF to Word</p>
+                
+                <div id="uploadProgress" class="hidden mt-12 max-w-md mx-auto">
+                    <div class="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div id="progressBar" class="h-full bg-blue-600 w-0 transition-all duration-300"></div>
+                    </div>
+                    <p class="text-blue-400 text-sm mt-4 font-mono animate-pulse">OPTIMIZING DOCUMENT STRUCTURE...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 py-32">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div class="max-w-xl">
+                <h2 class="text-4xl font-extrabold mb-4">Precision Tools</h2>
+                <p class="text-slate-500">Industry-leading conversion engines designed for data integrity and layout preservation.</p>
+            </div>
+            <div class="flex gap-2">
+                <span class="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-xs">AI OCR</span>
+                <span class="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-xs">AES-256</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div onclick="updateTool('pdf_to_word', 'PDF to Word', 'Text Extraction Mode')" class="glass card-hover p-8 rounded-[2.5rem] cursor-pointer group">
+                <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-blue-500 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <i data-lucide="file-text"></i>
+                </div>
+                <h4 class="font-black text-xl mb-2">PDF → Word</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Full layout preservation with editable text formatting.</p>
+            </div>
+
+            <div onclick="updateTool('word_to_pdf', 'Word to PDF', 'Standard ISO Format')" class="glass card-hover p-8 rounded-[2.5rem] cursor-pointer group">
+                <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                    <i data-lucide="file-check"></i>
+                </div>
+                <h4 class="font-black text-xl mb-2">Word → PDF</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">High-fidelity conversion for professional printing.</p>
+            </div>
+
+            <div onclick="updateTool('pdf_to_ppt', 'PDF to PPT', 'Slide Generation')" class="glass card-hover p-8 rounded-[2.5rem] cursor-pointer group">
+                <div class="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                    <i data-lucide="presentation"></i>
+                </div>
+                <h4 class="font-black text-xl mb-2">PDF → PPT</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Auto-layout slides from document sections.</p>
+            </div>
+
+            <div onclick="updateTool('excel_to_word', 'Excel to Word', 'Table Formatting')" class="glass card-hover p-8 rounded-[2.5rem] cursor-pointer group">
+                <div class="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center text-green-500 mb-6 group-hover:bg-green-600 group-hover:text-white transition-colors">
+                    <i data-lucide="table"></i>
+                </div>
+                <h4 class="font-black text-xl mb-2">Excel → Word</h4>
+                <p class="text-slate-500 text-sm leading-relaxed">Transform spreadsheets into professional reports.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/5 py-20 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-white/10 p-2 rounded-xl"><i data-lucide="box" class="w-5 h-5"></i></div>
+                    <span class="text-xl font-bold tracking-tighter">Universal<span class="text-blue-500">X</span></span>
+                </div>
+                <p class="text-slate-500 max-w-xs text-sm">The world's most advanced document conversion platform for enterprise teams.</p>
+            </div>
+            <div class="flex gap-16">
+                <div class="flex flex-col gap-4">
+                    <h5 class="font-bold text-sm">Product</h5>
+                    <a href="#" class="text-slate-500 text-sm hover:text-white">API Access</a>
+                    <a href="#" class="text-slate-500 text-sm hover:text-white">Security</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <h5 class="font-bold text-sm">Support</h5>
+                    <a href="#" class="text-slate-500 text-sm hover:text-white">Documentation</a>
+                    <a href="#" class="text-slate-500 text-sm hover:text-white">Contact</a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/5 text-center text-slate-600 text-[10px] tracking-[0.2em] uppercase font-bold">
+            © 2024 UniversalX Intelligence Systems. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        let selectedAction = 'pdf_to_word';
+
+        function updateTool(action, title, desc) {
+            selectedAction = action;
+            document.getElementById('toolTitle').innerText = "Convert " + title;
+            document.getElementById('toolDesc').innerText = desc;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.onclick = () => fileInput.click();
+        
+        fileInput.onchange = async (e) => {
+            const files = e.target.files;
+            if(!files.length) return;
+
+            document.getElementById('uploadProgress').classList.remove('hidden');
+            let progress = 0;
+            const progBar = document.getElementById('progressBar');
+            
+            const timer = setInterval(() => {
+                progress += 5;
+                progBar.style.width = progress + '%';
+                if(progress >= 95) clearInterval(timer);
+            }, 100);
+
+            const formData = new FormData();
+            formData.append('action', selectedAction);
+            formData.append('files', files[0]);
+
+            const response = await fetch('/api/convert', { method: 'POST', body: formData });
+            const data = await response.json();
+            
+            clearInterval(timer);
+            progBar.style.width = '100%';
+
+            if(data.status === 'success') {
+                setTimeout(() => window.location.href = data.url, 500);
+            } else {
+                alert("Error: " + data.message);
+                document.getElementById('uploadProgress').classList.add('hidden');
+                progBar.style.width = '0%';
+            }
+        };
+    </script>
+</body>
+</html>
